@@ -115,7 +115,7 @@
 			return tmpString;
 		};
 		var userInputUri = document.getElementById('ta-original').value;
-		var encodedUri = batchReplace(encodeURIComponent(userInputUri), [
+		var encodedUri = batchReplace(encodeURI(userInputUri), [
 			{ rep: /%E2%9C%93/g, w: '✓' },
 			{ rep: /%22/g, w: '"' },
 			{ rep: /%23/g, w: '#' },
