@@ -4,22 +4,60 @@
 	<meta charset="utf-8" />
 	<title># EncodeURI</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
+	<script>
+	(function(){
+		if (window.navigator.language) {
+			var _theLang = 'en';
+			if (window.navigator.language.indexOf('zh') !== -1) {
+				_theLang = 'zh';
+			};
+			document.getElementsByTagName('html')[0].setAttribute('data-jn-lang', _theLang);
+		};
+	})();
+	</script>
 	<style type="text/css">
-	@import url(/fonts/seravek.css);
-	@import url(/fonts/open-sans.css);
+	html[data-jn-lang="en"] .chinese-only {
+		display: none;
+	}
+	html[data-jn-lang="zh"] .english-only {
+		display: none;
+	}
+	</style>
+	<style type="text/css">
+	._desktop-linecompact {
+		display: inline-block;
+	}
+	._desktop-linebreak {
+		display: block;
+	}
+	@media screen and (max-width: 767px) {
+		.desktop-only {
+			display: none;
+		}
+		._desktop-linecompact {
+			display: block;
+		}
+		._desktop-linebreak {
+			display: inline-block;
+		}
+	}
+	</style>
+	<style type="text/css">
 	* {
 		text-rendering: optimizeLegibility;
 		box-sizing: border-box;
 	}
 	body {
-		font-family: Seravek, 'Myriad Pro', Myriad, 'Myriad Set Pro', 'Myriad Set', 'Open Sans', 'Helvetica Neue', Helvetica Neue, Helvetica, Lucida Grande, Arial, 'Arial-Black', 'Arial Black', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', sans-serif;
+		font-family: 'Source Code Pro', Seravek, 'Open Sans', 'Helvetica Neue', Helvetica, 'Lucida Grande', Arial, 'Arial-Black', 'Arial Black', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', sans-serif;
 		font-size: 18px;
 		font-weight: 300;
 		color: #FFF;
+		color: #666;
 		background: #2089DA;
+		background: #F2F2F2;
 		padding: 0;
 		margin: 0;
-		/*overflow: hidden;*/
 	}
 	.cont {
 		width: auto;
@@ -31,12 +69,18 @@
 		margin: 1.6rem 0 0;
 	}
 	h1 {
-		font-size: 30px;
-		letter-spacing: 0.05rem;
+		font-size: 26px;
+		letter-spacing: 0.02rem;
 		margin: 1.6rem 0 0;
 	}
 	h1::before {
 		content: '# ';
+	}
+	@media screen and (min-width: 768px) {
+		h1::after {
+			content: ' (String args[])';
+			opacity: 0.05;
+		}
 	}
 	h2 {
 		font-size: 16px;
@@ -47,12 +91,13 @@
 		margin: 0 0 0.8rem;
 	}
 	textarea {
-		font-family: inherit;
+		font-family: 'Source Code Pro', 'Menlo', 'Consolas', 'Monaco', Seravek, 'Open Sans', 'Helvetica Neue', Helvetica, 'Lucida Grande', Arial, 'Arial-Black', 'Arial Black', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', sans-serif;
 		font-size: 18px;
-		font-weight: 300;
+		font-weight: 400;
 		line-height: 26px;
 		word-wrap: break-word;
 		word-break: break-all;
+		box-shadow: rgba(0, 0, 0, 0.044) 0 1px 2px;
 		border: none;
 		border-radius: 3px;
 		outline: none;
@@ -70,13 +115,24 @@
 			height: 6rem;
 		}
 	}
+	#ta-encoded-container {
+		transition: all 400ms ease;
+	}
+	#ta-encoded-container[data-string-length="0"] {
+		opacity: 0.1;
+	}
 	footer {
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: 400;
-		color: #000;
-		opacity: 0.35;
+		color: #666;
 
 		padding: 2rem 0 2rem;
+	}
+	footer a {
+		opacity: 0.5;
+	}
+	footer a:hover {
+		opacity: 1;
 	}
 	/* ---------------------------------------- */
 	a {
@@ -93,20 +149,34 @@
 <body onclick="focus()">
 	<div class="cont" onclick="focus()">
 		<h1><a href="./">EncodeURI</a></h1>
-		<div class="content">
+		<div class="content" id="ta-original-container">
 			<h2><label for="ta-original">Original URI</label></h2>
 			<textarea id="ta-original" autofocus></textarea>
 		</div>
-		<div class="content">
+		<div class="content" id="ta-encoded-container">
 			<h2>Encoded URI</h2>
 			<textarea id="ta-encoded" readonly></textarea>
 		</div>
-		<footer>
-			<a href="//joyneop.xyz/">Created by <strong>Joy Neop</strong> with <strong>Fun</strong>.</a>
+		<footer class="desktop-only">
+			<div class="_desktop-linecompact english-only">
+				<a href="//joyneop.xyz/">Created by <strong>Joy Neop</strong>.</a>
+			</div>
+			<div class="_desktop-linecompact chinese-only">
+				<a href="//joyneop.xyz/">一个 <strong>Joy Neop</strong> 作品.</a>
+			</div>
+			<div class="_desktop-linecompact chinese-only" style="color: #08C;">
+				<a href="http://gold.xitu.io/#/entry/56cc9abf7db2a20051b08d10">收录于稀土掘金.</a>
+			</div>
+			<div class="_desktop-linecompact english-only">
+				<a class="__link-to-bookmarklet" href="">Save this <strong>bookmarklet</strong>?</a>
+			</div>
+			<div class="_desktop-linecompact chinese-only">
+				<a class="__link-to-bookmarklet" href="">保存这个书签栏小工具?</a>
+			</div>
 		</footer>
 	</div>
 	<script>
-	document.getElementById('ta-original').addEventListener('input', function () {
+	var justEncode = function (args) {
 		var batchReplace = function (_str, _list) {
 			var tmpString = _str;
 			_list.forEach(function (v) {
@@ -114,8 +184,7 @@
 			});
 			return tmpString;
 		};
-		var userInputUri = document.getElementById('ta-original').value;
-		var encodedUri = batchReplace(encodeURI(userInputUri), [
+		var encodedUri = batchReplace(encodeURI(args), [
 			{ rep: /%E2%9C%93/g, w: '✓' },
 			{ rep: /%22/g, w: '"' },
 			{ rep: /%3C/g, w: '<' },
@@ -127,14 +196,60 @@
 			{ rep: /%5B/g, w: '{' },
 			{ rep: /%5D/g, w: '}' }
 		]);
-		document.getElementById('ta-encoded').value = encodedUri;
-	});
+		return encodedUri;
+	};
+
+	var userInputEventHandler = function () {
+		document.getElementById('ta-encoded').value = justEncode(document.getElementById('ta-original').value);
+		document.getElementById('ta-encoded-container').setAttribute('data-string-length', document.getElementById('ta-original').value.length);
+	};
+	userInputEventHandler();
+	document.getElementById('ta-original').addEventListener('input', userInputEventHandler);
 
 	var taEncodedFocusEventHandler = function () {
 		setTimeout(function () {
 			document.getElementById('ta-encoded').select();
 		}, 10);
 	};
+
+	var runForCurrentLocation = function () {
+		var __juste = '__FUNCTION_HERE__';
+		window.prompt('Copy the encoded URI below', __juste(window.location.href));
+	};
+
+	var stringifyFunction = function (f) {
+		return ( '' + f.toString()
+		.replace(/\s\s*/g, ' ')
+		.replace(/([\w])\s([^\w])/g, '$1$2')
+		.replace(/([^\w])\s([\w])/g, '$1$2')
+		.replace(/([^\w])\s([^\w])/g, '$1$2')
+		.replace(/([\w])\s([^\w])/g, '$1$2')
+		.replace(/([^\w])\s([\w])/g, '$1$2')
+		.replace(/([^\w])\s([^\w])/g, '$1$2') + '' );
+	};
+
+	var makeAnonymousFunctionRunAutomatically = function (f) {
+		var f_s = '';
+		if (typeof(f) === 'function') {
+			f_s = stringifyFunction(f);
+		} else if (typeof(f) === 'string') {
+			f_s = f;
+		};
+		return ('(' + f_s + ')()');
+	};
+
+	var giveMeTheBookmarklet = function () {
+		var f1 = stringifyFunction(runForCurrentLocation);
+		console.log(f1);
+		var f2 = stringifyFunction(justEncode);
+		var f3 = f1.replace('\'__FUNCTION_HERE__\'', f2);
+		return ('javascript:' + encodeURI(makeAnonymousFunctionRunAutomatically(f3)) );
+	};
+
+
+	[].map.call(document.getElementsByClassName('__link-to-bookmarklet'), function (element) {
+		element.setAttribute('href', giveMeTheBookmarklet());
+	});
 
 	document.getElementById('ta-encoded').addEventListener('focus', taEncodedFocusEventHandler);
 	document.getElementById('ta-encoded').addEventListener('click', taEncodedFocusEventHandler);
