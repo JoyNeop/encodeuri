@@ -240,7 +240,6 @@
 
 	var giveMeTheBookmarklet = function () {
 		var f1 = stringifyFunction(runForCurrentLocation);
-		console.log(f1);
 		var f2 = stringifyFunction(justEncode);
 		var f3 = f1.replace('\'__FUNCTION_HERE__\'', f2);
 		return ('javascript:' + encodeURI(makeAnonymousFunctionRunAutomatically(f3)) );
