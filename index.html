@@ -118,7 +118,7 @@
 	#ta-encoded-container {
 		transition: all 400ms ease;
 	}
-	#ta-encoded-container[data-string-length="0"] {
+	#ta-encoded-container[data-string-empty="true"] {
 		opacity: 0.1;
 	}
 	footer {
@@ -201,7 +201,7 @@
 
 	var userInputEventHandler = function () {
 		document.getElementById('ta-encoded').value = justEncode(document.getElementById('ta-original').value);
-		document.getElementById('ta-encoded-container').setAttribute('data-string-length', document.getElementById('ta-original').value.length);
+		document.getElementById('ta-encoded-container').setAttribute('data-string-empty', ((document.getElementById('ta-original').value.length === 0) ? 'true' : 'false'));
 	};
 	userInputEventHandler();
 	document.getElementById('ta-original').addEventListener('input', userInputEventHandler);
