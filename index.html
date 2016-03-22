@@ -25,9 +25,6 @@
 		display: none;
 	}
 	body[data-string-empty="true"] .fade-when-input-box-empty {
-		opacity: 0.15;
-	}
-	body[data-string-empty="true"] .invisible-when-input-box-empty {
 		opacity: 0;
 	}
 	</style>
@@ -79,16 +76,9 @@
 	h1 {
 		font-size: 26px;
 		letter-spacing: 0.02rem;
+		height: 0px;
 		margin: 1.6rem 0 0;
-	}
-	h1::before {
-		content: '# ';
-	}
-	@media screen and (min-width: 768px) {
-		h1::after {
-			content: ' (String args[])';
-			opacity: 0.05;
-		}
+		overflow: hidden;
 	}
 	h2 {
 		font-size: 16px;
@@ -123,6 +113,9 @@
 			height: 6rem;
 		}
 	}
+	#ta-encoded {
+		visibility: hidden;
+	}
 	footer {
 		font-size: 13px;
 		font-weight: 400;
@@ -148,9 +141,9 @@
 	};
 	</script>
 </head>
-<body onclick="focus()">
+<body onclick="focus()" data-string-empty="true">
 	<div class="cont" onclick="focus()">
-		<h1 class="fade-when-input-box-empty"><a href="./">EncodeURI</a></h1>
+		<h1><a href="./">EncodeURI</a></h1>
 		<div class="content" id="ta-original-container">
 			<h2><label for="ta-original">Original URI</label></h2>
 			<textarea id="ta-original" autofocus></textarea>
@@ -203,10 +196,13 @@
 
 	var userInputEventHandler = function () {
 		document.getElementById('ta-encoded').value = justEncode(document.getElementById('ta-original').value);
-		document.body.setAttribute('data-string-empty', ((document.getElementById('ta-original').value.length === 0) ? 'true' : 'false'));
+		if (document.getElementById('ta-original').value.length !== 0) {
+			document.body.setAttribute('data-string-empty', 'false');
+		};
 	};
-	userInputEventHandler();
 	document.getElementById('ta-original').addEventListener('input', userInputEventHandler);
+	userInputEventHandler();
+	document.getElementById('ta-encoded').style.visibility = 'visible';
 
 	var taEncodedFocusEventHandler = function () {
 		setTimeout(function () {
@@ -215,8 +211,8 @@
 	};
 
 	var runForCurrentLocation = function () {
-		var __juste = '__FUNCTION_HERE__';
-		window.prompt('Copy the encoded URI below', __juste(window.location.href));
+		var juste__ = '__FUNCTION_HERE__';
+		window.prompt('Copy the encoded URI below', juste__(window.location.href));
 	};
 
 	var stringifyFunction = function (f) {
