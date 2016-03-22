@@ -4,6 +4,7 @@
 	<meta charset="utf-8" />
 	<title># EncodeURI</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="pridejs-config-duration" content="regular">
 	<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
 	<script>
 	(function(){
@@ -22,6 +23,12 @@
 	}
 	html[data-jn-lang="zh"] .english-only {
 		display: none;
+	}
+	body[data-string-empty="true"] .fade-when-input-box-empty {
+		opacity: 0.15;
+	}
+	body[data-string-empty="true"] .invisible-when-input-box-empty {
+		opacity: 0;
 	}
 	</style>
 	<style type="text/css">
@@ -47,6 +54,7 @@
 	* {
 		text-rendering: optimizeLegibility;
 		box-sizing: border-box;
+		transition: all 400ms ease;
 	}
 	body {
 		font-family: 'Source Code Pro', Seravek, 'Open Sans', 'Helvetica Neue', Helvetica, 'Lucida Grande', Arial, 'Arial-Black', 'Arial Black', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', sans-serif;
@@ -115,12 +123,6 @@
 			height: 6rem;
 		}
 	}
-	#ta-encoded-container {
-		transition: all 400ms ease;
-	}
-	#ta-encoded-container[data-string-empty="true"] {
-		opacity: 0.1;
-	}
 	footer {
 		font-size: 13px;
 		font-weight: 400;
@@ -148,16 +150,16 @@
 </head>
 <body onclick="focus()">
 	<div class="cont" onclick="focus()">
-		<h1><a href="./">EncodeURI</a></h1>
+		<h1 class="fade-when-input-box-empty"><a href="./">EncodeURI</a></h1>
 		<div class="content" id="ta-original-container">
 			<h2><label for="ta-original">Original URI</label></h2>
 			<textarea id="ta-original" autofocus></textarea>
 		</div>
-		<div class="content" id="ta-encoded-container">
+		<div class="content fade-when-input-box-empty" id="ta-encoded-container">
 			<h2>Encoded URI</h2>
 			<textarea id="ta-encoded" readonly></textarea>
 		</div>
-		<footer class="desktop-only">
+		<footer class="desktop-only fade-when-input-box-empty">
 			<div class="_desktop-linecompact english-only">
 				<a href="//joyneop.xyz/">Created by <strong>Joy Neop</strong>.</a>
 			</div>
@@ -201,7 +203,7 @@
 
 	var userInputEventHandler = function () {
 		document.getElementById('ta-encoded').value = justEncode(document.getElementById('ta-original').value);
-		document.getElementById('ta-encoded-container').setAttribute('data-string-empty', ((document.getElementById('ta-original').value.length === 0) ? 'true' : 'false'));
+		document.body.setAttribute('data-string-empty', ((document.getElementById('ta-original').value.length === 0) ? 'true' : 'false'));
 	};
 	userInputEventHandler();
 	document.getElementById('ta-original').addEventListener('input', userInputEventHandler);
