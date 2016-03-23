@@ -51,7 +51,7 @@
 	* {
 		text-rendering: optimizeLegibility;
 		box-sizing: border-box;
-		transition: all 400ms ease;
+		transition: all 200ms ease;
 	}
 	body {
 		font-family: 'Source Code Pro', Seravek, 'Open Sans', 'Helvetica Neue', Helvetica, 'Lucida Grande', Arial, 'Arial-Black', 'Arial Black', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', sans-serif;
@@ -125,6 +125,7 @@
 	}
 	footer a {
 		opacity: 0.5;
+		transition: none;
 	}
 	footer a:hover {
 		opacity: 1;
@@ -133,6 +134,20 @@
 	a {
 		color: inherit;
 		text-decoration: none;
+	}
+	</style>
+	<style>
+	.bookmarklet-anchor-hidden-text {
+		font-size: 0px;
+	}
+	.bookmarklet-anchor-hidden-text::before {
+		font-size: 13px;
+	}
+	[data-jn-lang="en"] .bookmarklet-anchor-hidden-text::before {
+		content: 'Save this bookmarklet?';
+	}
+	[data-jn-lang="zh"] .bookmarklet-anchor-hidden-text::before {
+		content: '保存这个书签栏小工具?';
 	}
 	</style>
 	<script>
@@ -163,10 +178,10 @@
 				<a href="http://gold.xitu.io/#/entry/56cc9abf7db2a20051b08d10">收录于稀土掘金.</a>
 			</div>
 			<div class="_desktop-linecompact english-only">
-				<a class="__link-to-bookmarklet" href="">Save this <strong>bookmarklet</strong>?</a>
+				<a class="__link-to-bookmarklet" href=""><span class="bookmarklet-anchor-hidden-text">EncodeURI</span></a>
 			</div>
 			<div class="_desktop-linecompact chinese-only">
-				<a class="__link-to-bookmarklet" href="">保存这个书签栏小工具?</a>
+				<a class="__link-to-bookmarklet" href=""><span class="bookmarklet-anchor-hidden-text">EncodeURI</span></a>
 			</div>
 		</footer>
 	</div>
