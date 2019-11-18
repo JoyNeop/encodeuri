@@ -19,7 +19,9 @@
 	<script type="text/javascript">
 	// Jump
 	if (location.search === '?jump') {
-		location.href = (atob(location.hash.slice(1)));
+		if (location.hash.length > 5) {
+			location.href = (atob(location.hash.slice(1)));
+		};
 	};
 	</script>
 	<style type="text/css">
