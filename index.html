@@ -5,7 +5,6 @@
 	<title># EncodeURI</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="pridejs-config-duration" content="regular">
-	<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
 	<script>
 	(function(){
 		if (window.navigator.language) {
@@ -13,15 +12,21 @@
 			if (window.navigator.language.indexOf('zh') !== -1) {
 				_theLang = 'zh';
 			};
-			document.getElementsByTagName('html')[0].setAttribute('data-jn-lang', _theLang);
+			document.getElementsByTagName('html')[0].setAttribute('data-app-lang', _theLang);
 		};
 	})();
 	</script>
+	<script type="text/javascript">
+	// Jump
+	if (location.search === '?jump') {
+		location.href = (atob(location.hash.slice(1)));
+	};
+	</script>
 	<style type="text/css">
-	html[data-jn-lang="en"] .chinese-only {
+	html[data-app-lang="en"] .lang-zh-only {
 		display: none;
 	}
-	html[data-jn-lang="zh"] .english-only {
+	html[data-app-lang="zh"] .lang-en-only {
 		display: none;
 	}
 	body[data-string-empty="true"] .fade-when-input-box-empty {
@@ -143,10 +148,10 @@
 	.bookmarklet-anchor-hidden-text::before {
 		font-size: 13px;
 	}
-	[data-jn-lang="en"] .bookmarklet-anchor-hidden-text::before {
+	[data-app-lang="en"] .bookmarklet-anchor-hidden-text::before {
 		content: 'Save this bookmarklet?';
 	}
-	[data-jn-lang="zh"] .bookmarklet-anchor-hidden-text::before {
+	[data-app-lang="zh"] .bookmarklet-anchor-hidden-text::before {
 		content: '保存这个书签栏小工具?';
 	}
 	</style>
@@ -165,22 +170,26 @@
 		</div>
 		<div class="content fade-when-input-box-empty" id="ta-encoded-container">
 			<h2>Encoded URI</h2>
-			<textarea id="ta-encoded" readonly></textarea>
+			<textarea id="ta-encoded"></textarea>
+		</div>
+		<div class="content fade-when-input-box-empty" id="ta-jumper-container">
+			<h2>Jumping Link</h2>
+			<textarea id="ta-jumper"></textarea>
 		</div>
 		<footer class="desktop-only fade-when-input-box-empty">
-			<div class="_desktop-linecompact english-only">
+			<div class="_desktop-linecompact lang-en-only">
 				<a href="//joyneop.xyz/">Created by <strong>Joy Neop</strong>.</a>
 			</div>
-			<div class="_desktop-linecompact chinese-only">
+			<div class="_desktop-linecompact lang-zh-only">
 				<a href="//joyneop.xyz/">一个 <strong>Joy Neop</strong> 作品.</a>
 			</div>
-			<div class="_desktop-linecompact chinese-only" style="color: #08C;">
+			<div class="_desktop-linecompact lang-zh-only" style="color: #08C;">
 				<a href="http://gold.xitu.io/#/entry/56cc9abf7db2a20051b08d10">收录于稀土掘金.</a>
 			</div>
-			<div class="_desktop-linecompact english-only">
+			<div class="_desktop-linecompact lang-en-only">
 				<a class="__link-to-bookmarklet" href=""><span class="bookmarklet-anchor-hidden-text">EncodeURI</span></a>
 			</div>
-			<div class="_desktop-linecompact chinese-only">
+			<div class="_desktop-linecompact lang-zh-only">
 				<a class="__link-to-bookmarklet" href=""><span class="bookmarklet-anchor-hidden-text">EncodeURI</span></a>
 			</div>
 		</footer>
@@ -212,9 +221,13 @@
 	};
 
 	var userInputEventHandler = function () {
-		document.getElementById('ta-encoded').value = justEncode(document.getElementById('ta-original').value);
+		var encodedUri = justEncode(document.getElementById('ta-original').value);
+		document.getElementById('ta-encoded').value = encodedUri;
+		document.getElementById('ta-jumper').value = 'https://encodeuri.com/?jump#' + btoa(encodedUri).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=/g, '');
 		if (document.getElementById('ta-original').value.length !== 0) {
 			document.body.setAttribute('data-string-empty', 'false');
+		} else {
+			document.body.setAttribute('data-string-empty', 'true');
 		};
 	};
 	document.getElementById('ta-original').addEventListener('input', userInputEventHandler);
